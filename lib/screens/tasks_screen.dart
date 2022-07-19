@@ -95,8 +95,8 @@ class _TasksScreenState extends State<TasksScreen> {
               padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 50),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  CircleAvatar(
+                children: [
+                  const CircleAvatar(
                     radius: 32,
                     backgroundColor: Colors.white,
                     child: Icon(
@@ -105,10 +105,10 @@ class _TasksScreenState extends State<TasksScreen> {
                       size: 42,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  Text(
+                  const Text(
                     'Todoey',
                     style: TextStyle(
                       fontSize: 52,
@@ -117,8 +117,10 @@ class _TasksScreenState extends State<TasksScreen> {
                     ),
                   ),
                   Text(
-                    '12 Tasks',
-                    style: TextStyle(
+                    myTasks.isNotEmpty
+                        ? '${myTasks.length} Tasks'
+                        : 'No current tasks',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                     ),
