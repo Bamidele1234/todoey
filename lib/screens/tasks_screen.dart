@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/widgets/task_list.dart';
+import 'package:todoey/screens/add_task_screen.dart';
+import 'package:todoey/constants.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
@@ -15,7 +17,21 @@ class TasksScreen extends StatelessWidget {
           size: 30,
           semanticLabel: 'Create a new task',
         ),
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            isScrollControlled: true,
+            shape: kRoundedBorder,
+            context: context,
+            builder: (context) => SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: const AddTaskScreen(),
+              ),
+            ),
+          );
+        },
       ),
       body: SafeArea(
         child: Column(
