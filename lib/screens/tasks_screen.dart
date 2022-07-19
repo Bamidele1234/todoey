@@ -2,10 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:todoey/widgets/task_list.dart';
 import 'package:todoey/screens/add_task_screen.dart';
 import 'package:todoey/constants.dart';
+import 'package:todoey/models/task.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
   const TasksScreen({Key? key}) : super(key: key);
 
+  @override
+  State<TasksScreen> createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
+  List<Task> myTasks = [];
+  bool copy = false;
+  String? myTask;
+
+  displaySb(String message) =>
+      ScaffoldMessenger.of(context).showSnackBar(ksnackBar(message));
+
+  ksnackBar(String message) => SnackBar(
+        duration: const Duration(milliseconds: 1200),
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              fontSize: 15.0,
+              fontWeight: FontWeight.w500,
+              fontStyle: FontStyle.italic),
+        ),
+      );
+
+  // List<Task> tasks = [
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +53,35 @@ class TasksScreen extends StatelessWidget {
                 padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                child: const AddTaskScreen(),
+                child: AddTaskScreen(
+                  addText: (String value) {
+                    myTask = value;
+                  },
+                  addTask: () {
+                    if (myTask != null) {
+                      // Ensure that a task has been entered into the field
+                      for (var element in myTasks) {
+                        if (myTask == element.name) {
+                          copy = true;
+                        }
+                      }
+                      if (!copy) {
+                        setState(() {
+                          myTasks.add(
+                            Task(
+                              name: myTask.toString(),
+                            ),
+                          );
+                        });
+                      } else {
+                        displaySb('You have already added this task');
+                      }
+                      myTask = null;
+                      copy = false;
+                    }
+                    Navigator.pop(context);
+                  },
+                ),
               ),
             ),
           );
@@ -81,7 +135,9 @@ class TasksScreen extends StatelessWidget {
                     topLeft: Radius.circular(20),
                   ),
                 ),
-                child: const TasksList(),
+                child: TasksList(
+                  tasks: myTasks,
+                ),
               ),
             )
           ],
