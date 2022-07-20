@@ -19,4 +19,14 @@ class Data extends ChangeNotifier {
 
   get taskCount => _myTasks.length;
   UnmodifiableListView<Task> get publicTasks => UnmodifiableListView(_myTasks);
+
+  updateTask(Task task) {
+    task.toggleDone();
+    notifyListeners();
+  }
+
+  removeTask(Task task) {
+    _myTasks.remove(task);
+    notifyListeners();
+  }
 }
