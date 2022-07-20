@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/constants.dart';
-import 'package:todoey/models/task.dart';
 
 class AddTaskScreen extends StatelessWidget {
   const AddTaskScreen({
