@@ -9,19 +9,15 @@ import 'package:todoey/data.dart';
 class TasksScreen extends StatelessWidget {
   const TasksScreen({Key? key}) : super(key: key);
 
-  ksnackBar(String message) {
-    SnackBar(
-      duration: const Duration(milliseconds: 1200),
-      content: Text(
-        message,
+  final ksnackBar = const SnackBar(
+    content: Text('You have already added this task',
         textAlign: TextAlign.center,
-        style: const TextStyle(
-            fontSize: 15.0,
-            fontWeight: FontWeight.w500,
-            fontStyle: FontStyle.italic),
-      ),
-    );
-  }
+        style: TextStyle(
+          fontSize: 15.0,
+          fontWeight: FontWeight.w500,
+          fontStyle: FontStyle.italic,
+        )),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +57,8 @@ class TasksScreen extends StatelessWidget {
                           if (!data.copy) {
                             data.addTask();
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                ksnackBar('You have already added this task'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(ksnackBar);
                           }
                           data.myTask = null;
                           data.copy = false;
